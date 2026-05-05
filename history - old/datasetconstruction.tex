@@ -1,0 +1,40 @@
+\subsection{Dataset construction}
+
+\noindent
+This study combines three data layers: a country-level panel, a firm-level Trucost panel, and a final merged regression panel. The objective is to relate changes in the macroeconomic and energy environment to firm-level environmental performance, while accounting for sectoral exposure and country-level conditions. Because firm-level ESG and environmental performance data are not available at quarterly or monthly frequency in a sufficiently consistent manner, the empirical analysis is conducted at the annual level.
+
+\subsubsection{Country panel}
+
+\noindent
+The first step consists in constructing a country-level panel for the European countries included in the sample. This panel contains the macroeconomic and energy variables used to characterize the national environment in which firms operate. In particular, it includes electricity prices, inflation, and GDP.
+
+\noindent
+Electricity price data are initially collected at daily frequency through an energy market API and then aggregated to the annual level. This aggregation ensures consistency with the frequency of the firm-level environmental data used in the analysis. For each country-year, the resulting measure captures the average electricity price over the year.
+
+\noindent
+Macroeconomic controls are added using OECD and World Bank sources. GDP is used to capture the scale of economic activity, while inflation controls for the general price environment. These variables are measured at the country-year level. The resulting country panel therefore provides the macroeconomic and energy context for all firms headquartered in a given country in a given year.
+
+\subsubsection{Trucost firm panel}
+
+\noindent
+The second step is the construction of the firm-level environmental panel using Trucost data. The purpose of using Trucost is to rely on a quantitative measure of environmental performance at the firm level rather than on indirect proxies such as CAPEX or broad CSR expenditure.
+
+\noindent
+[Placeholder: insert here the literature-based justification for selecting the Trucost variable, in particular why \emph{GHG Direct Intensity} is the preferred proxy for firm-level operational environmental performance in the context of geopolitical or energy shocks.]
+
+\noindent
+The firm-level panel is constructed at the annual frequency because ESG and environmental indicators are not available on a quarterly or monthly basis in a sufficiently complete and comparable way. As a result, the empirical design focuses on medium-run variation in environmental performance rather than immediate short-run adjustments.
+
+\noindent
+The Trucost sample is then filtered to retain the sectors relevant for the empirical design. Firms are classified into energy-intensive and non-energy-intensive industries in order to define treatment and control groups. Energy-intensive sectors include chemicals, metals and mining, oil and gas, paper and forest products, and construction materials. The control group consists of less energy-intensive but industrially comparable sectors, such as machinery, automobiles, auto components, pharmaceuticals, and biotechnology. Based on this classification, an indicator variable is created that equals one for energy-intensive industries and zero otherwise.
+
+\subsubsection{Final regression panel}
+
+\noindent
+In the final step, the firm-level Trucost panel is merged with the country-level panel using country and year identifiers. This produces a firm-country-year dataset in which each observation combines a firm's environmental performance and sectoral classification with the macroeconomic and energy conditions prevailing in its home country.
+
+\noindent
+The final regression panel contains three main categories of variables. First, it includes the dependent variable measuring firm-level environmental performance. Second, it includes the treatment dimension based on whether the firm belongs to an energy-intensive industry. Third, it includes country-level covariates such as electricity prices, GDP, and inflation.
+
+\noindent
+This merged structure makes it possible to study whether firms in energy-intensive sectors are differentially affected by changes in the energy environment, and whether those changes are associated with variation in firm-level environmental performance. The complete panel therefore links macro-level conditions, sectoral exposure, and firm-level outcomes within a single regression framework.

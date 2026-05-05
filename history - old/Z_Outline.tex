@@ -1,0 +1,291 @@
+\documentclass[12pt,a4paper]{article}
+% ---- Basic packages ----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+% ---- Page layout ----
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+\usepackage{enumitem}
+% ---- Line spacing ----
+\usepackage{setspace}
+\onehalfspacing
+% ---- Math and symbols ----
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{bm}
+\usepackage{siunitx}
+% ---- Tables ----
+\usepackage{booktabs, tabularx, longtable, multirow, threeparttable}
+% ---- Figures ----
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+% ---- Colors and links ----
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+
+\title{Geopolitics for Business \\ Group Project}
+
+\author{
+    Data Group 2 \\[2ex]
+    \normalsize Marius Borsu Lefevre \\
+    \normalsize Giovanni Clemente \\
+    \normalsize Greta Guadalupi \\
+    \normalsize Petr Hrebenar \\
+    \normalsize Stéphane Miquel Clément \\
+    \normalsize Pietro Montano \\
+    \normalsize Souhail Habib Nehme \\
+    \normalsize Joan Olaf Subirachs Garcia
+}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{Introduction and Research Question}
+% =============================================================================
+
+Russia's full-scale invasion of Ukraine in February 2022 constituted one of the most significant energy supply disruptions in recent European history. The sanctions imposed on Russia and the subsequent re-routing of European energy procurement transformed what had been a decade-long exposure to cheap Russian natural gas into an acute strategic liability, particularly for countries and industries that had built their production models around it. At the same time, the shock arrived against a backdrop of intensifying climate commitments: the EU's Fit for 55 package and the corporate disclosure obligations under the Corporate Sustainability Reporting Directive (CSRD) were already pushing firms to reduce their greenhouse gas emissions per unit of output.
+
+This paper asks how the Russia–Ukraine energy shock affected firm-level greenhouse gas intensity. Specifically, we are interested in whether European firms — and in particular, energy-intensive manufacturers — reduced their direct GHG emissions per unit of revenue in the aftermath of the shock, and whether this adjustment was shaped by the degree to which their host country was exposed to Russian gas imports. The core research question is therefore: \textit{Did the Russia–Ukraine war trigger a reduction in firm-level GHG intensity among European energy-intensive firms, and was this effect attenuated for firms operating in countries that were more dependent on Russian gas?}
+
+The question sits at the intersection of two literatures that have thus far developed in relative isolation: the economics of energy market disruptions and the firm-level determinants of environmental performance. It also carries direct policy implications. If energy-intensive firms in gas-dependent countries were less able to reduce their GHG footprint — because the menu of available energy alternatives was more constrained — then country-level energy policy becomes a key enabler (or bottleneck) for corporate decarbonisation. The analysis proceeds as follows. Section~\ref{sec:lit} situates the paper in the relevant literature. Section~\ref{sec:data} describes the data construction and treatment assignment. Section~\ref{sec:method} presents the empirical strategy. Section~\ref{sec:results} discusses results and their interpretation. Section~\ref{sec:limits} outlines limitations and avenues for future research. Section~\ref{sec:conclusion} concludes.
+
+
+% =============================================================================
+\section{Literature Review}
+\label{sec:lit}
+% =============================================================================
+
+Our paper connects to several strands of literature. The first concerns the macro-level consequences of the Russia–Ukraine war for European energy markets. \citet{BauerEtAl2023} document the speed and scale of the gas substitution that took place across the EU in 2022, with a combination of LNG imports, demand destruction, and fuel switching all contributing to the adjustment. The uneven geographic distribution of this adjustment — with Central and Eastern European countries facing sharper constraints due to pipeline dependency — is well-documented in the EUROSTAT energy statistics and has been analysed in scenario analyses by the International Energy Agency. The heterogeneous shock across countries is precisely what our empirical strategy exploits.
+
+The second strand concerns the relationship between energy prices and firm-level emissions. A large body of work following \citet{Martin2016} and \citet{RavikumarEtAl2022} shows that energy cost shocks can reduce GHG emissions intensity through multiple channels: input substitution (switching from gas to less carbon-intensive alternatives such as electricity from renewables or nuclear), investment in energy efficiency, and output contraction in the most emission-intensive production lines. The direction and magnitude of these effects depend critically on whether firms can access alternative energy sources, a dimension that is shaped by country-level infrastructure and policy.
+
+Third, the carbon leakage literature is relevant because it highlights the strategic interaction between energy costs and international competitiveness. Firms facing higher energy costs may relocate production to less-regulated jurisdictions, reducing measured domestic emissions without achieving a genuine global decarbonisation. Our analysis, which relies on headquarters-based country assignment, cannot fully distinguish between these channels, and we return to this limitation in Section~\ref{sec:limits}.
+
+Finally, the broader \textit{polycrisis} literature — as articulated in the special issue motivating this project — emphasises the compounding dynamics that arise when multiple systemic stresses overlap. The Russia–Ukraine shock arrived at a moment of heightened climate urgency, creating a context in which energy diversification and decarbonisation were simultaneously economically necessary and politically salient. Our results speak directly to whether this conjuncture accelerated or retarded environmental improvement at the firm level.
+
+
+% =============================================================================
+\section{Data}
+\label{sec:data}
+% =============================================================================
+
+\subsection{Overview of the Panel Dataset}
+
+The final dataset is a firm-year panel covering publicly listed European firms in selected manufacturing and resource sectors. It combines three data sources: proprietary ESG firm-level data from S\&P Global TruCost; country-year macroeconomic data from the World Bank; and country-year energy price data from EMAPS/Ember. The panel spans the years 2017–2024 and covers 28 European countries (EU-27 plus Norway, Switzerland, and the United Kingdom). After filtering for the relevant sector universe, removing duplicate firm-year observations, and excluding singleton firms, the final panel contains approximately 973,000 firm-year observations across roughly 192,000 unique firms.
+
+\subsection{Outcome Variable: GHG Direct Intensity}
+
+The primary outcome variable is \textit{GHG Direct Intensity}, defined as Scope 1 (direct) greenhouse gas emissions in tonnes of CO$_2$-equivalent per USD 1 million of revenue, as reported by TruCost. We choose this indicator for two reasons. First, it normalises for firm size and revenue variation, making the measure comparable across firms and over time even in the presence of business cycle fluctuations. Second, Scope 1 emissions are directly within the operational control of the firm and directly linked to energy input decisions, making it the most appropriate measure for studying how firms respond to energy cost shocks. Revenue-intensity rather than absolute emissions is appropriate here because we are interested in efficiency improvements, not simply output contractions.
+
+We considered several alternative ESG metrics. A natural candidate was the RepRisk controversy score, which captures reputational ESG risk based on news and media monitoring. However, after downloading and examining the RepRisk data, we found coverage to be substantially limited for the time period and geographic scope of our sample: a large fraction of country-sector-year cells had missing or sparse observations, which would have required imputation assumptions that could compromise the validity of the analysis. We therefore proceed with GHG Direct Intensity, which has near-complete coverage across the full panel.
+
+Table~\ref{tab:desc} presents descriptive statistics for the key variables.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Descriptive Statistics}
+\label{tab:desc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Variable & N & Mean & SD & p25 & Median & p75 & Max \\
+\midrule
+GHG Direct Intensity (tCO$_2$e / \$M rev.) & 973,815 & 121.1 & 205.3 & 16.5 & 88.7 & 188.4 & 15,225 \\
+GHG Scope 1 Absolute (tCO$_2$e) & 973,815 & 17,081 & 761,962 & 30 & 157 & 657 & 181,534,000 \\
+Revenue (USD million) & 973,815 & 94.1 & 2,424 & 0.6 & 2.4 & 10.1 & 400,223 \\
+GDP per Capita (EUR) & 973,445 & 48,141 & 12,768 & 40,353 & 46,680 & 54,688 & 140,739 \\
+Inflation (\%) & 973,445 & 3.2 & 3.2 & 1.0 & 1.9 & 5.5 & 19.4 \\
+\bottomrule
+\end{tabular}}
+\begin{tablenotes}
+\small \item Firm-year panel, 2017–2024. GHG Direct Intensity is P99-winsorised. Revenue in USD million.
+\end{tablenotes}
+\end{table}
+
+Figure~\ref{fig:ghg_trends} plots mean GHG Direct Intensity over time, separately for treated and control groups under each treatment definition. The left panel shows the trajectory for firms in gas-exposed versus non-exposed countries; the right panel shows energy-intensive versus non-energy-intensive sectors. Both panels suggest a general declining trend in GHG intensity throughout the sample period, with a notable acceleration after 2022 for the energy-intensive sector group — which is the pattern our DiD specification is designed to identify.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{final_output/ghg_trends_plot.png}
+    \caption{Mean GHG Direct Intensity over time, by treatment group. Left: gas-exposed vs.\ control countries. Right: energy-intensive (EII) vs.\ control sectors. Dotted vertical line marks the Russia–Ukraine shock (February 2022).}
+    \label{fig:ghg_trends}
+\end{figure}
+
+\subsection{Treatment Assignment 1: Country-Level Russian Gas Exposure}
+
+The first treatment dimension captures the degree to which a firm's host country was structurally dependent on Russian natural gas prior to the 2022 shock. We compute an annual country-level \textit{exposure ratio} defined as:
+\[
+  \text{Exposure}_{c,t} = \frac{\text{Russian gas imports}_{c,t}}{\text{Gross Inland Consumption}_{c,t}}
+\]
+using Eurostat datasets \texttt{nrg\_ti\_gas} (natural gas imports by partner country, in TJ gross calorific value) and \texttt{nrg\_bal\_c} (complete energy balances, Gross Inland Consumption in TJ). Both series are at annual frequency and cover EU-27 countries from 2015 to 2024.
+
+To define the treatment group, we compute each country's average pre-shock exposure over the window 2017–2021 and classify countries in the top quartile ($\geq$ p75 = 14.1\%) as treated. This threshold yields eight treated countries: Hungary, Latvia, Slovakia, Italy, Czech Republic, Germany, Lithuania, and Bulgaria — precisely the group that features most prominently in policy discussions about Russian gas dependency. Figure~\ref{fig:exposure_bar} shows the full distribution of pre-shock average exposure across EU countries and the treatment threshold.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{final_output/russian_exposure_barplot.png}
+    \caption{Average Russian gas exposure by country, pre-shock window 2017–2021. Exposure is Russian gas imports as a share of gross inland energy consumption (Eurostat). Treated group (red): countries above the 75th percentile. Dashed lines mark the p75 and p50 thresholds.}
+    \label{fig:exposure_bar}
+\end{figure}
+
+Figure~\ref{fig:exposure_trends} further illustrates the relevance of this classification by plotting the average gas exposure over time for treated and control countries. The divergence between the two groups is stark: treated countries had systematically higher exposure throughout the pre-shock period, and their exposure dropped sharply only after 2022 — precisely as Russian pipeline flows were curtailed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{final_output/exposure_trends_plot.png}
+    \caption{Average Russian gas exposure over time for treated vs.\ control countries. Treated = top-p75 pre-shock exposure group (Hungary, Latvia, Slovakia, Italy, Czech Republic, Germany, Lithuania, Bulgaria). Dotted line: February 2022 shock.}
+    \label{fig:exposure_trends}
+\end{figure}
+
+\subsection{Treatment Assignment 2: Energy-Intensive Sectors}
+
+The second treatment dimension captures whether a firm belongs to a sector that is structurally energy-intensive. We classify sectors following the official Energy-Intensive Industries (EII) definition used by the OECD (based on energy input cost shares from the ICIO input-output tables), the European Commission (the EU EII Industrial Ecosystem), and the IEA (high-temperature process classification). Specifically, the following NACE Rev.2 two-digit codes are assigned $\text{EII}=1$:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+NACE & Sector \\
+\midrule
+C16 & Manufacture of wood and wood products \\
+C17 & Manufacture of paper and paper products \\
+C19 & Manufacture of coke and refined petroleum products \\
+C20 & Manufacture of chemicals and chemical products \\
+C22 & Manufacture of rubber and plastic products \\
+C23 & Manufacture of other non-metallic mineral products (cement, glass, ceramics) \\
+C24 & Manufacture of basic metals \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The control group ($\text{EII}=0$) consists of structurally comparable manufacturing sectors that are not classified as energy-intensive: pharmaceuticals (C21), machinery and equipment (C28), motor vehicles (C29), fabricated metal products (C25), furniture (C31), and printing and media reproduction (C18). These sectors share key structural features with EII sectors — capital intensity, trade exposure, manufacturing scale — but have substantially lower energy input cost shares, making them suitable counterfactuals. In the final panel, 647,026 observations (66.4\%) belong to EII sectors and 327,299 (33.6\%) to the control group.
+
+% =============================================================================
+\section{Methodology}
+\label{sec:method}
+% =============================================================================
+
+\subsection{Difference-in-Differences Framework}
+
+We estimate the effect of the Russia–Ukraine energy shock on firm-level GHG Direct Intensity using a difference-in-differences (DiD) design. The identifying variation comes from comparing the change in GHG intensity for treated firms (those exposed to the shock through the two treatment dimensions defined above) relative to control firms, across the pre-shock (2017–2021) and post-shock (2022–2024) periods.
+
+The baseline specification takes the form:
+\begin{equation}
+Y_{i,t} = \alpha_i + \lambda_t + \beta \cdot \text{Post}_t \times D_i + \gamma' X_{c,t} + \varepsilon_{i,t}
+\label{eq:did}
+\end{equation}
+where $Y_{i,t}$ is GHG Direct Intensity for firm $i$ in year $t$; $\alpha_i$ are firm fixed effects, absorbing all time-invariant firm characteristics; $\lambda_t$ are year fixed effects, absorbing aggregate time trends; $D_i$ is one of the treatment indicators defined above; $\text{Post}_t = \mathbf{1}(t \geq 2022)$; and $X_{c,t}$ includes time-varying country-level controls — GDP per capita (in EUR) and the annual consumer price inflation rate. Standard errors are clustered at the country level to account for within-country correlation across firms and years.
+
+We estimate four specifications. Models (1) through (3) each use a single binary treatment: country-level gas exposure (\texttt{gas\_exposed}), sector energy intensity (\texttt{energy\_intensive}), and the intersection of both (\texttt{both\_treated}), respectively. Model (4) — our most informative specification — includes all three treatment-post interactions simultaneously:
+\begin{equation}
+Y_{i,t} = \alpha_i + \lambda_t
+  + \beta_1 \, \text{Post}_t \times \text{GasExp}_i
+  + \beta_2 \, \text{Post}_t \times \text{EII}_i
+  + \beta_3 \, \text{Post}_t \times \text{GasExp}_i \times \text{EII}_i
+  + \gamma' X_{c,t} + \varepsilon_{i,t}
+\label{eq:triple}
+\end{equation}
+This triple-interaction specification allows us to decompose the country-level and sector-level channels and estimate whether the two dimensions of treatment reinforce or partially offset each other.
+
+\subsection{Identification: Exogeneity of the Shock}
+
+A central advantage of this design is the exogeneity of the treatment timing. The Russia–Ukraine war and the associated energy disruptions were not driven by firm-level decisions: they represent a geopolitical shock that was unanticipated by firms in its timing and severity. This is in contrast to, for example, a carbon tax, which firms may anticipate and respond to in advance of implementation. Under this assumption, the 2022 shock constitutes a natural experiment, and the DiD estimator identifies the causal effect of exposure to the shock on GHG intensity.
+
+\subsection{Parallel Trends Assumption}
+
+The validity of the DiD estimate rests on the parallel trends assumption: in the absence of the treatment, treated and control firms would have followed similar trends in GHG intensity. We provide two pieces of evidence in support of this assumption. First, Figure~\ref{fig:ghg_trends} shows that treated and control firms exhibited broadly parallel declining trends in GHG intensity over the pre-shock period 2017–2021, with no systematic pre-shock divergence. Second, we estimate an event-study version of equation~(\ref{eq:did}), replacing $\text{Post}_t \times D_i$ with a full set of year-by-treatment interactions, normalised to zero in 2021 (the last pre-shock year). The coefficients on the pre-2022 interactions allow a direct test of pre-trend parallelism.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{final_output/event_study_plot.png}
+    \caption{Event study estimates: year-by-year coefficients for gas-exposed vs.\ control firms, relative to 2021. Pre-2022 coefficients test the parallel trends assumption. Shaded areas: 95\% confidence intervals. Firm and year FE; SE clustered by country.}
+    \label{fig:event_study}
+\end{figure}
+
+The event study in Figure~\ref{fig:event_study} shows that pre-2022 coefficients are small and broadly centred around zero, consistent with parallel pre-trends. A post-2022 divergence becomes visible, though the pattern in the gas-exposure dimension is more modest than in the sector-level specification (see Figure~\ref{fig:ghg_trends}, right panel), which is consistent with the triple-interaction results discussed below.
+
+% =============================================================================
+\section{Results and Discussion}
+\label{sec:results}
+% =============================================================================
+
+Table~\ref{tab:did} presents the four DiD estimates.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Difference-in-Differences: Effect on GHG Direct Intensity}
+\label{tab:did}
+\begin{tabular}{lcccc}
+\toprule
+ & (1) & (2) & (3) & (4) \\
+ & Gas Exposed & Energy Intensive & Both Treated & Triple Int. \\
+\midrule
+Post $\times$ Gas Exposed         & 5.206$^{***}$ &               &                & $-$2.602 \\
+                                   & (1.100)        &               &                & (2.492) \\[2pt]
+Post $\times$ Energy Intensive    &               & $-$38.468$^{***}$ &            & $-$43.477$^{***}$ \\
+                                   &               & (2.210)           &            & (1.674) \\[2pt]
+Post $\times$ Both Treated        &               &               & $-$14.582$^{***}$ & 9.846$^{***}$ \\
+                                   &               &               & (5.601)           & (2.554) \\[2pt]
+GDP per capita (EUR)               & 0.000$^{***}$ & 0.000$^{**}$  & 0.000          & 0.000$^{***}$ \\
+                                   & (0.000)       & (0.000)       & (0.000)        & (0.000) \\[2pt]
+Inflation (\%)                    & 0.219         & 0.395$^{**}$  & 0.802$^{***}$  & 0.239 \\
+                                   & (0.205)       & (0.176)       & (0.300)        & (0.244) \\[2pt]
+\midrule
+Observations   & 973,445 & 973,445 & 973,445 & 973,445 \\
+Within $R^2$   & 0.011   & 0.047   & 0.015   & 0.048 \\
+Firm FE        & Yes     & Yes     & Yes     & Yes \\
+Year FE        & Yes     & Yes     & Yes     & Yes \\
+SE clustered at & Country & Country & Country & Country \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Notes: Dependent variable: GHG Direct Intensity (tCO$_2$e per \$1M revenue). Firm and year fixed effects included in all specifications. Standard errors in parentheses, clustered at the country level. $^{*}p<0.10$, $^{**}p<0.05$, $^{***}p<0.01$.
+\end{tablenotes}
+\end{table}
+
+The results tell a clear and internally consistent story. Model (2) establishes the central finding: energy-intensive firms reduced their GHG Direct Intensity by approximately 38.5 tCO$_2$e per \$1M of revenue in the post-2022 period, relative to non-EII firms in the same countries and year ($p < 0.01$). This is a large and economically significant effect — roughly 32 percent of the sample mean intensity of 121 tCO$_2$e/\$M. The most natural interpretation is that the energy shock forced firms in high-energy-cost sectors to rethink their energy sourcing strategy: investing in energy efficiency, shifting to lower-carbon electricity contracts, or diversifying supply chains away from gas. Because natural gas is itself a GHG-emitting fuel, this diversification toward electricity (especially from renewable or nuclear sources) mechanically reduces Scope 1 emissions per unit of output.
+
+Model (4) — the triple-interaction specification — allows us to decompose the mechanism further. The coefficient on Post $\times$ EII ($\hat\beta_2 = -43.5$, $p<0.01$) remains large and highly significant. The coefficient on Post $\times$ Both Treated ($\hat\beta_3 = +9.8$, $p<0.01$) is positive and significant, indicating that the energy-transition effect is \textit{attenuated} for energy-intensive firms located in countries that were more dependent on Russian gas. The net effect for a firm that is both in a gas-dependent country and in an EII sector is therefore $-43.5 + 9.8 = -33.7$ tCO$_2$e/\$M — substantial, but meaningfully smaller than the broader EII-sector average.
+
+The attenuation effect is theoretically compelling. Countries with high pre-shock Russian gas exposure faced a more constrained energy transition path: the alternatives to pipeline gas — LNG imports, interconnectors, domestic renewable expansion — are subject to infrastructure bottlenecks and long lead times. Firms headquartered in more constrained energy systems had fewer viable low-carbon alternatives in the short run, limiting the GHG reductions they could achieve through energy diversification. This finding suggests that firm-level decarbonisation and country-level energy policy are deeply complementary: even when firms face strong incentives to reduce emissions, their ability to act is constrained by the energy infrastructure available to them.
+
+Model (1) — the pure country-exposure specification — shows a small but significantly positive interaction coefficient ($\hat\beta_1 = +5.2$, $p<0.01$). Taken in isolation, this seems to suggest that firms in gas-exposed countries increased their GHG intensity. However, Model (4) reveals that this is largely driven by the composition of sectors across countries: once we control for the EII/non-EII split, the standalone gas-exposure effect becomes statistically indistinguishable from zero ($-2.6$, $p=0.30$). The apparent positive association in Model (1) reflects the fact that gas-dependent countries host proportionally more EII firms, and those firms' transition costs dominate the country-level average.
+
+% =============================================================================
+\section{Limitations and Further Research}
+\label{sec:limits}
+% =============================================================================
+
+Several limitations of the current analysis are worth acknowledging. First, and most importantly, the country assignment is based on each firm's registered headquarters location. For multinational firms, this may poorly capture the true geography of production and energy consumption. A firm registered in Germany but operating primarily in Poland faces the energy mix of Poland, not Germany — and Germany's high gas exposure score would be attributed to a firm that may not bear that exposure operationally. Correcting for this would require facility-level data on production locations, which is not available in TruCost.
+
+Second, the analysis cannot distinguish between genuine decarbonisation and carbon leakage. If firms in gas-exposed countries reduced their measured Scope 1 emissions by outsourcing the most emission-intensive production steps to lower-cost jurisdictions outside Europe, our estimate would overstate the true environmental impact of the energy shock. A Scope 3 analysis or trade-adjusted emission accounting would be needed to address this.
+
+Third, the parallel trends assumption, while supported by the event study, cannot be formally proven. The pre-shock period 2017–2021 contains other shocks (notably COVID-19 in 2020) that may have differentially affected treated and control firms. Although we control for GDP per capita and inflation, the COVID-19 recession and recovery pattern could introduce confounding variation that is not fully absorbed by the year fixed effects.
+
+A natural extension of this work is to examine the medium-term trajectory. The current panel extends to 2024, capturing only two full years of the post-shock period. It is plausible that the transition away from Russian gas is a multi-year process, with the full decarbonisation effect materialising over a longer horizon as firms complete capacity investments in renewables and energy efficiency. A repeated analysis with data from 2025 and beyond would allow for a richer dynamic specification.
+
+% =============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =============================================================================
+
+This paper provides firm-level evidence that the Russia–Ukraine energy shock triggered a significant reduction in GHG intensity among European energy-intensive firms. Using a difference-in-differences design on a panel of approximately 973,000 firm-year observations, we find that energy-intensive firms reduced their direct GHG emissions per unit of revenue by approximately 38--43 tCO$_2$e per \$1M in the post-2022 period, relative to comparable non-EII firms. The most plausible mechanism is that the sharp increase in energy prices — and the strategic imperative to diversify away from Russian gas — pushed firms to invest in energy efficiency and lower-carbon energy sources, reducing Scope 1 intensity as a by-product.
+
+Critically, this effect is not uniform: firms headquartered in countries with higher pre-shock Russian gas dependency experienced an attenuation of roughly 10 tCO$_2$e/\$M, leaving them with a smaller but still substantial net reduction. This finding highlights the strategic interdependence between firm-level environmental performance and country-level energy infrastructure. Countries with more diversified, flexible energy systems — nuclear, renewables, well-connected grids — were better positioned to channel the energy price shock into genuine decarbonisation gains. Countries locked into pipeline gas dependency faced a slower transition, constraining the environmental improvements their industrial firms could achieve even when strong price incentives were present.
+
+The policy implication is dual. At the country level, investment in energy diversification — transmission interconnectors, LNG import capacity, domestic renewable deployment — is not only an energy security imperative but also an enabler of corporate decarbonisation. At the firm level, companies constrained by their location should place strategic emphasis on energy-mix flexibility and long-term power purchase agreements as tools to decouple their GHG performance from the energy endowment of their host country.
+
+\end{document}

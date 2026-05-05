@@ -1,0 +1,510 @@
+%----------------------------------------------------------------------------------------
+%  Geopolitics for Business — Group Project Presentation
+%  Data Group 2
+%  Template: layout.tex (Darmstadt / Bocconi blue)
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt]{beamer}
+
+\mode<presentation> {
+  \usetheme{Darmstadt}
+
+  % Remove top navigation strip
+  \setbeamertemplate{headline}{}
+
+  % Bocconi blue palette (replaces seahorse)
+  \definecolor{bocblue}{HTML}{002B5B}
+  \setbeamercolor{structure}{fg=bocblue}
+  \setbeamercolor{palette primary}{bg=bocblue,fg=white}
+  \setbeamercolor{palette secondary}{bg=bocblue!80,fg=white}
+  \setbeamercolor{palette tertiary}{bg=bocblue!60,fg=white}
+  \setbeamercolor{palette quaternary}{bg=bocblue,fg=white}
+  \setbeamercolor{titlelike}{parent=palette primary}
+  \setbeamercolor{frametitle}{bg=bocblue,fg=white}
+  \setbeamercolor{block title}{bg=bocblue,fg=white}
+  \setbeamercolor{block body}{bg=bocblue!10}
+  \setbeamercolor{section in head/foot}{bg=bocblue,fg=white}
+  \setbeamercolor{subsection in head/foot}{bg=bocblue!70,fg=white}
+  \setbeamertemplate{blocks}[rounded][shadow=false]
+}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{colortbl,xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+% Graceful placeholder when figure files are missing
+\newcommand{\figureOrBox}[2][0.85\linewidth]{%
+  \IfFileExists{#2}{%
+    \includegraphics[width=#1]{#2}%
+  }{%
+    \fbox{\parbox{#1}{\centering\vspace{1.2em}\texttt{\tiny #2}\\[0.3em]%
+      \textit{\tiny Place figure here}\vspace{1.2em}}}%
+  }%
+}
+
+%----------------------------------------------------------------------------------------
+%  TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Geopolitics for Business]{Energy Shock and Firm-Level Decarbonisation}
+\subtitle{Did the Russia--Ukraine War Reduce GHG Intensity in European Industry?}
+
+\author{Data Group 2}
+\institute[Bocconi University]{
+  Marius Borsu Lefevre \quad Giovanni Clemente \quad Greta Guadalupi \\
+  Petr Hrebenar \quad Stéphane Miquel Clément \quad Pietro Montano \\
+  Souhail Habib Nehme \quad Joan Olaf Subirachs Garcia \\[0.8em]
+  \small Bocconi University --- Geopolitics for Business
+}
+\date{May 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 2: BIG PICTURE
+%----------------------------------------------------------------------------------------
+\section{Motivation}
+
+\begin{frame}{Big Picture}
+  \begin{block}{The context}
+    Russia's 2022 invasion of Ukraine triggered the largest European energy supply disruption in decades,
+    sending gas prices soaring and forcing firms to rethink their energy sourcing overnight.
+  \end{block}
+
+  \vspace{0.6em}
+
+  \begin{itemize}
+    \item Europe had built production models around cheap Russian pipeline gas
+    \item The shock arrived as climate commitments tightened: EU Fit for 55, CSRD
+    \item Energy-intensive industries --- chemicals, metals, cement, paper --- were hit hardest
+    \item Yet the literature on geopolitical shocks and environmental performance is thin
+  \end{itemize}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 3: WHY WE CARE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Why We Care}
+  \begin{block}{The gap}
+    We know a lot about how geopolitical shocks affect investment and profitability.
+    We know far less about their effect on \textbf{firm-level environmental performance}.
+  \end{block}
+
+  \vspace{0.6em}
+
+  \begin{itemize}
+    \item Quantifying the firm-level GHG response is essential to evaluate whether
+          energy-security shocks and climate policy \emph{reinforce} or \emph{undermine} each other
+    \item Country-level energy infrastructure may become a \emph{bottleneck} for decarbonisation ---
+          even when price incentives are strong
+    \item Policy implication: energy-mix flexibility at the country level enables (or blocks)
+          firm-level environmental adjustment
+  \end{itemize}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 4: RESEARCH QUESTION
+%----------------------------------------------------------------------------------------
+\section{Research Question}
+
+\begin{frame}{Research Question}
+  \begin{block}{}
+    \normalsize
+    Did the Russia--Ukraine energy shock trigger a \textbf{reduction in firm-level GHG intensity}
+    among European energy-intensive firms --- and was this effect \textbf{different} for firms
+    in countries more or less dependent on Russian gas?
+  \end{block}
+
+  \vspace{0.8em}
+
+  \begin{itemize}
+    \item \textbf{Outcome:} GHG Direct Intensity --- Scope 1 emissions (tCO$_2$e) per \$1M revenue
+    \item Measured by \textbf{TruCost (S\&P Global)}: captures \emph{operational} emissions efficiency,
+          normalised for firm size, with lowest measurement noise across datasets (NGFS 2024)
+  \end{itemize}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 5: DATA
+%----------------------------------------------------------------------------------------
+\section{Data}
+
+\begin{frame}{Data}
+  \textbf{Panel dataset}
+  \begin{itemize}
+    \item $\approx$973{,}000 firm-year observations
+    \item 28 European countries (EU-27 + NO, CH, UK)
+    \item Years: 2018--2024 (pre-shock: 2018--2021; post-shock: 2022--2024)
+    \item Publicly listed firms in manufacturing and resource sectors
+  \end{itemize}
+
+  \vspace{0.6em}
+
+  \textbf{Sources}
+  \begin{itemize}
+    \item \textbf{TruCost (S\&P Global)} --- GHG Direct Intensity (Scope 1)
+    \item \textbf{World Bank} --- GDP per capita, CPI inflation
+    \item \textbf{Eurostat} --- Russian gas import shares (\texttt{nrg\_ti\_gas}, \texttt{nrg\_bal\_c})
+    \item \textbf{EMAPS / Ember} --- Country-year electricity prices
+  \end{itemize}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 6: METHODOLOGY 1 — DiD IDENTIFICATION STRATEGY
+%----------------------------------------------------------------------------------------
+\section{Methodology}
+
+\begin{frame}{Identification Strategy: Difference-in-Differences}
+  \begin{itemize}
+    \item \textbf{Core idea:} compare the change in GHG intensity for \emph{treated} firms
+          relative to \emph{control} firms, before vs.\ after February 2022
+    \item \textbf{Why the shock is exogenous:} the RU-UA war and energy disruptions were
+          unanticipated by firms --- no pre-announcement or anticipation bias
+    \item \textbf{Parallel trends:} treated and control firms show broadly parallel
+          GHG intensity trends in 2018--2021; validated via event-study pre-period coefficients
+  \end{itemize}
+
+  \vspace{0.4em}
+
+  \begin{figure}
+    \centering
+    \figureOrBox[0.90\linewidth]{final_output/parallel_trends_plot.png}
+    \caption{\footnotesize Mean GHG Direct Intensity, treated vs.\ control. Dotted line: Feb 2022 shock.}
+  \end{figure}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 7: METHODOLOGY 2 — TREATMENT 1: GAS EXPOSURE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Treatment 1: Country Gas Exposure}
+  \begin{columns}[T]
+    \begin{column}{0.42\textwidth}
+      \small
+      \[
+        \text{Exp}_{c,t} = \frac{\text{RU gas imports}_{c,t}}{\text{Gross Inland Consumption}_{c,t}}
+      \]
+      \vspace{0.2em}
+      \begin{itemize}\small
+        \item Pre-shock average 2018--2021
+        \item \textbf{Treated:} top quartile ($\geq$ p75 $=$ 14.1\%)
+        \item 8 countries: HU, LV, SK, IT, CZ, DE, LT, BG
+        \item Source: Eurostat \texttt{nrg\_ti\_gas}, \texttt{nrg\_bal\_c}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \figureOrBox[\linewidth]{final_output/russian_exposure_barplot.png}
+      \vspace{-0.3em}
+      \begin{center}
+        \tiny Avg.\ Russian gas exposure by country, 2018--2021. Red = treated ($\geq$ p75).
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 8: METHODOLOGY 3 — MODEL 1 SPECIFICATION
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Model 1: Gas Exposure Specification}
+  \begin{equation}
+    Y_{i,t} = \alpha_i + \lambda_t + \beta_1 \cdot \text{Post}_t \times \text{GasExp}_i + \gamma' X_{c,t} + \varepsilon_{i,t}
+  \end{equation}
+
+  \vspace{0.3em}
+
+  \begin{itemize}
+    \item $Y_{i,t}$: GHG Direct Intensity (tCO$_2$e / \$M revenue)
+    \item $\alpha_i$: firm fixed effects \quad $\lambda_t$: year fixed effects
+    \item $\text{GasExp}_i = 1$ if firm's country is in the top-p75 exposure group
+    \item $\text{Post}_t = \mathbf{1}(t \geq 2022)$
+    \item $X_{c,t}$: GDP per capita + CPI inflation (country-year controls)
+    \item SE clustered at the \textbf{country level}
+  \end{itemize}
+
+  \vspace{0.4em}
+
+  \begin{block}{Coefficient of interest}
+    \small $\hat\beta_1$: avg.\ change in GHG intensity for gas-exposed countries vs.\ non-exposed, post-2022 vs.\ pre-2022
+  \end{block}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 9: METHODOLOGY 4 — TREATMENT 2: EII SECTORS
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Treatment 2: Energy-Intensive Sectors (EII)}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Treated (EII = 1)}\\[0.3em]
+      OECD/EC official EII classification:
+      \begin{itemize}\small
+        \item C16 Wood products
+        \item C17 Paper
+        \item C19 Coke \& refined petroleum
+        \item C20 Chemicals
+        \item C22 Rubber \& plastics
+        \item C23 Non-metallic minerals (cement, glass)
+        \item C24 Basic metals
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Control (EII = 0)}\\[0.3em]
+      Comparable manufacturing, lower energy input share:
+      \begin{itemize}\small
+        \item C21 Pharmaceuticals
+        \item C25 Fabricated metals
+        \item C28 Machinery
+        \item C29 Motor vehicles
+        \item C31 Furniture
+        \item C18 Printing
+      \end{itemize}
+      \vspace{0.5em}
+      \small 66\% of observations in EII sectors (647K firm-years)
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 10: METHODOLOGY 5 — MODEL 2 SPECIFICATION
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Model 2: Sector Energy Intensity Specification}
+  \begin{equation}
+    Y_{i,t} = \alpha_i + \lambda_t + \beta_2 \cdot \text{Post}_t \times \text{EII}_i + \gamma' X_{c,t} + \varepsilon_{i,t}
+  \end{equation}
+
+  \vspace{0.3em}
+
+  \begin{itemize}
+    \item $\text{EII}_i = 1$ for energy-intensive sectors (C16, C17, C19, C20, C22, C23, C24)
+    \item Same firm/year FE and country-clustered SE as Model 1
+  \end{itemize}
+
+  \vspace{0.4em}
+
+  \begin{block}{Coefficient of interest}
+    \small $\hat\beta_2$: avg.\ change in GHG intensity for EII firms vs.\ non-EII, post-2022 vs.\ pre-2022
+  \end{block}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 11: METHODOLOGY 6 — FINAL MODEL (MODEL 4)
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Final Model: Triple Interaction (Model 3)}
+  \small
+  \begin{equation}
+    Y_{i,t} = \alpha_i + \lambda_t
+      + \beta_1 \, \text{Post}_t \times \text{GasExp}_i
+      + \beta_2 \, \text{Post}_t \times \text{EII}_i
+      + \beta_3 \, \text{Post}_t \times \text{GasExp}_i \times \text{EII}_i
+      + \gamma' X_{c,t} + \varepsilon_{i,t}
+  \end{equation}
+
+  \normalsize\vspace{0.3em}
+
+  \begin{itemize}
+    \item $\hat\beta_1$: standalone country gas-exposure effect
+    \item $\hat\beta_2$: standalone EII sector effect
+    \item $\hat\beta_3$: \textbf{additional} effect for firms that are \emph{both}
+          in gas-exposed countries \emph{and} in EII sectors
+  \end{itemize}
+
+  \vspace{0.3em}
+
+  \begin{block}{Why triple interaction?}
+    Allows us to decompose country- and sector-level channels separately,
+    and test whether the two dimensions of treatment reinforce or offset each other.
+  \end{block}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 12: RESULTS — REGRESSION TABLE
+%----------------------------------------------------------------------------------------
+\section{Results}
+
+\begin{frame}{Results: All Models}
+  \begin{center}
+    \small
+    \begin{tabular}{lccc}
+      \toprule
+       & (1) & (2) & (3) \\
+       & Gas Exposed & Energy Intensive & Triple \\
+      \midrule
+      Post $\times$ GasExp
+        & $5.209^{***}$ & $-38.461^{***}$ & $-2.611$ \\
+        & $(1.089)$ & $(2.209)$ & $(2.498)$ \\[3pt]
+      Post $\times$ EII
+        & & & $-43.480^{***}$ \\
+        & & & $(1.643)$ \\[3pt]
+      Post $\times$ Both
+        & & & $9.863^{***}$ \\
+        & & & $(2.543)$ \\[3pt]
+      \midrule
+      Observations & 972{,}979 & 972{,}979 & 972{,}979 \\
+      Within $R^2$  & 0.011 & 0.048 & 0.049 \\
+      Firm / Year FE & Yes & Yes & Yes \\
+      SE clustered & Country & Country & Country \\
+      \bottomrule
+    \end{tabular}
+    \par\vspace{0.4em}
+    {\tiny Dep.\ var.: GHG Direct Intensity (tCO$_2$e / \$1M revenue).
+      SE in parentheses. $^{*}p<0.10$, $^{**}p<0.05$, $^{***}p<0.01$.}
+  \end{center}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 13: KEY FINDING — MODEL 2
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Finding: EII Firms Reduced GHG Intensity}
+  \begin{block}{Model 2}
+    \small EII firms reduced GHG Direct Intensity by $\approx \mathbf{38.5}$\,tCO$_2$e/\$M post-2022 vs.\ non-EII firms\\
+    \hfill ($p < 0.01$; $\approx$32\% of sample mean of 121\,tCO$_2$e/\$M)
+  \end{block}
+
+  \vspace{0.3em}
+
+  \begin{itemize}
+    \item Higher energy prices forced diversification away from gas $\to$ Scope 1 falls
+    \item Effect is sustained across 2022--2024, not a one-off adjustment
+  \end{itemize}
+
+  \vspace{0.2em}
+
+  \begin{figure}
+    \centering
+    \figureOrBox[0.85\linewidth]{final_output/event_study_plot.png}
+    \caption{\footnotesize Event study: $\hat\beta_t$ for EII vs.\ non-EII, normalised to 2021.}
+  \end{figure}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 14: KEY FINDING — MODEL 4
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Finding: Gas Dependency Attenuates Decarbonisation}
+  \begin{block}{Model 3}
+    \small $\hat\beta_2 = -43.5^{***}$, $\hat\beta_3 = +9.8^{***}$ $\Rightarrow$ net effect (doubly treated): $\mathbf{-33.7}$\,tCO$_2$e/\$M
+  \end{block}
+
+  \vspace{0.3em}
+
+  \begin{itemize}
+    \item Gas-dependent countries faced \textbf{constrained transition paths} (LNG bottlenecks, long renewable lead times)
+    \item Standalone gas-exposure effect: $+5.2$ in Model 1 $\to$ indistinguishable from zero ($-2.6$, $p=0.30$) in Model 3
+  \end{itemize}
+
+  \vspace{0.2em}
+
+  \begin{figure}
+    \centering
+    \figureOrBox[0.78\linewidth]{final_output/event_study_plot_triple.png}
+    \caption{\footnotesize Dynamic DiD: total effect for doubly-treated firms ($\hat\beta_{2,t}+\hat\beta_{3,t}$). Ref: 2021.}
+  \end{figure}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 15: DISCUSSION
+%----------------------------------------------------------------------------------------
+\section{Discussion}
+
+\begin{frame}{Discussion: Mechanism}
+  \begin{enumerate}
+    \item Energy price shock $\to$ strong incentive to cut gas consumption
+    \item Firms diversify: energy efficiency, lower-carbon electricity, supply-chain changes
+    \item Gas is itself a GHG fuel $\to$ diversification \emph{mechanically} reduces Scope 1
+  \end{enumerate}
+
+  \vspace{0.5em}
+
+  \begin{center}
+    \small
+    \begin{tabular}{lll}
+      \toprule
+      Country & Energy endowment & Adjustment capacity \\
+      \midrule
+      France & Nuclear flexibility & Higher \\
+      Germany & Coal fallback + renewables & Moderate \\
+      Italy & LNG ramp-up constrained & Lower \\
+      HU / SK & High pipeline dependency & Lowest \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.3em}
+
+  Firm-level decarbonisation and \textbf{country-level energy infrastructure} are deeply complementary.
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 16: LIMITATIONS
+%----------------------------------------------------------------------------------------
+\section{Limitations}
+
+\begin{frame}{Limitations}
+  \begin{enumerate}
+    \item \textbf{HQ $\neq$ operations for MNEs}\\
+      {\small A German-registered firm producing in Poland faces the Polish energy mix.
+      Facility-level data would be needed to correct this.}
+
+    \vspace{0.4em}
+
+    \item \textbf{Carbon leakage not identified}\\
+      {\small Firms may have outsourced emission-intensive steps abroad.
+      Scope 3 or trade-adjusted accounting required.}
+
+    \vspace{0.4em}
+
+    \item \textbf{Pre-trend caveat (EII treatment)}\\
+      {\small 2018 pre-period coefficient elevated ($\approx +16$); results capture \emph{acceleration}
+      of a divergence, not its initiation. Post-shock drop ($-25$ to $-35$) is an order of magnitude larger.}
+
+    \vspace{0.4em}
+
+    \item \textbf{Short post-shock window}\\
+      {\small Panel ends in 2024 --- only two full post-shock years. Full trajectory may materialise
+      as renewable capacity investments complete.}
+  \end{enumerate}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  SLIDE 17: CONCLUSION + THANK YOU
+%----------------------------------------------------------------------------------------
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+  \begin{block}{Main finding}
+    The RU-UA energy shock \textbf{significantly reduced GHG intensity} among European EII firms:
+    $-38$--$43$\,tCO$_2$e/\$M (32--36\% of sample mean).
+    Effect is \textbf{smaller} in gas-dependent countries ($\approx -10$\,tCO$_2$e/\$M attenuation).
+  \end{block}
+
+  \vspace{0.5em}
+
+  \textbf{Policy implications}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Country level}\\[0.2em]
+      {\small Energy diversification (interconnectors, LNG, renewables) is both an energy-security
+      \emph{and} decarbonisation imperative.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Firm level}\\[0.2em]
+      {\small Prioritise energy-mix flexibility and long-term power-purchase agreements
+      to decouple GHG performance from host-country endowments.}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\end{document}

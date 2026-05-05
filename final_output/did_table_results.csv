@@ -1,0 +1,19 @@
+Model,Variable,Coef,SE,t,p,Stars
+M1: Gas Exposed,interaction,5.2086,1.0887,4.784,0.0,***
+M1: Gas Exposed,post,-35.931,1.4409,-24.936,0.0,***
+M1: Gas Exposed,gdp_per_capita_eur,0.0002,0.0001,2.95,0.0032,***
+M1: Gas Exposed,inflation_percent,0.217,0.2028,1.07,0.2846,
+M2: Energy Intensive,interaction,-38.4609,2.2094,-17.408,0.0,***
+M2: Energy Intensive,post,-9.0608,1.8055,-5.018,0.0,***
+M2: Energy Intensive,gdp_per_capita_eur,0.0003,0.0001,2.219,0.0265,**
+M2: Energy Intensive,inflation_percent,0.3935,0.1767,2.227,0.0259,**
+M3: Both Treated,interaction,-14.5737,5.6053,-2.6,0.0093,***
+M3: Both Treated,post,-33.4616,4.4773,-7.474,0.0,***
+M3: Both Treated,gdp_per_capita_eur,0.0005,0.0004,1.234,0.2171,
+M3: Both Treated,inflation_percent,0.8013,0.3049,2.628,0.0086,***
+M4: Triple,post_gas,-2.6113,2.4979,-1.045,0.2958,
+M4: Triple,post_eii,-43.4801,1.6429,-26.465,0.0,***
+M4: Triple,post_both,9.863,2.5432,3.878,0.0001,***
+M4: Triple,post,-6.2694,1.1848,-5.291,0.0,***
+M4: Triple,gdp_per_capita_eur,0.0002,0.0001,3.036,0.0024,***
+M4: Triple,inflation_percent,0.2374,0.242,0.981,0.3266,
