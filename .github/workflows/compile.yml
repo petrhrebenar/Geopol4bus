@@ -11,8 +11,6 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: presentation.tex # Change this if your main file has a different name
-          latexmk_use_xelatex: true  # if using XeLaTeX
-          extra_system_packages: "some-package"  # if a package is missing
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
