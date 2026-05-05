@@ -10,10 +10,10 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex # Change this if your main file has a different name
+          root_file: presentation.tex # Change this if your main file has a different name
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
           name: PDF_Output
-          path: main.pdf # This should match the name of your compiled PDF
+          path: slides.pdf # This should match the name of your compiled PDF
